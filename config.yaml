@@ -1,0 +1,42 @@
+server:
+  kind: !Fabric
+    fabric_version: "0.18.2"
+    installer_version: "1.1.0"
+
+  name: "mc.qwatys.space"
+  port: 25565
+  max_memory: 2G
+  motd: ""
+
+  version: "1.21.10"
+  restart_every:
+    secs: 200  # test value.
+    nanos: 0
+
+  update_mode: !AllCompatible
+
+  props:
+    difficulty: !Medium
+    gamemode: !Survival
+    is_hardcore: false
+
+management:  
+  rcon:
+    enable: true
+    port: 25575
+
+  conf_reload_method: !RconSync
+
+world:
+  path: "world"
+
+vcs:
+  ignore:
+    - .mcpkg
+    - target
+    - source
+
+plugins:
+  mods:
+    - source: !Modrinth "simple-voice-chat"
+      version: !Any
