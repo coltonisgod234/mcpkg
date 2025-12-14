@@ -2,6 +2,8 @@ use serde::{Deserialize, Serialize};
 use tokio::time::Duration;
 
 use crate::config::plugins::ModsConfig;
+
+/// The version of a particular mod or component. The default being "Any"
 #[derive(Debug, Deserialize, Serialize)]
 pub enum Version {
     Exact(String),
@@ -9,6 +11,12 @@ pub enum Version {
     NoneOf(Vec<String>),
     FilterList(Vec<Version>),
     Any,
+}
+
+impl Default for Version {
+    fn default() -> Self {
+        return Self::Any;
+    }
 }
 
 #[derive(Debug, Deserialize, Serialize)]

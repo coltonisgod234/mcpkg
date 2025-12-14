@@ -78,11 +78,15 @@ async fn main() {
             }
         },
         Command::Init => {
-            vcs::init_vcs()
-                .expect("failed to initialize VCS");
+            unimplemented!();
+
+            /* vcs::init_vcs()
+                .expect("failed to initialize VCS"); */
         },
         Command::Commit { message, world, config, allow_null_commit } => {
-            // make sure the user doesn't do anything dumb!
+            unimplemented!();
+
+            /* // make sure the user doesn't do anything dumb!
             if !world && !config && !allow_null_commit {
                 error!("You are about to make a null commit. This commit will have no tracked files and does nothing but clutter up the repository");
                 error!("However, null commits can be used to resolve very specific repository errors. If you actually want to make a null commit, specify --allow-null-commit");
@@ -96,7 +100,7 @@ async fn main() {
             repo.commit_nonatomic(desired);
             repo.save_to(vcs::MCPKG_REPO_CONFIG);
 
-            // info!("{:?}", diff);
+            // info!("{:?}", diff); */
         }
     }
 }

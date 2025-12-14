@@ -36,6 +36,8 @@ impl ModSource {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Mod {
     pub source: ModSource,
+    
+    #[serde(default)]
     pub version: Version,
 }
 
