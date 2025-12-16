@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::config::Version;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub enum ModSource {
     Modrinth(String)
 }
@@ -33,7 +33,7 @@ impl ModSource {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Mod {
     pub source: ModSource,
     
@@ -41,7 +41,7 @@ pub struct Mod {
     pub version: Version,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ModsConfig {
     pub mods: Vec<Mod>
 }

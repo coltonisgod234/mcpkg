@@ -4,7 +4,7 @@ use tokio::time::Duration;
 use crate::config::plugins::ModsConfig;
 
 /// The version of a particular mod or component. The default being "Any"
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub enum Version {
     Exact(String),
     AnyOf(Vec<String>),
@@ -19,7 +19,7 @@ impl Default for Version {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub enum ServerKind {
     Fabric {
         fabric_version: String,
@@ -28,13 +28,13 @@ pub enum ServerKind {
     Vanilla
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub enum UpdateMode {
     AllCompatible,
     Instant
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ServerConfig {
     // software info
     pub kind: ServerKind,
@@ -58,32 +58,32 @@ pub struct ServerConfig {
     pub props: ServerProps
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct WorldConfig {
     pub path: String,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ServerProps {
     pub difficulty: Difficulty,
     pub gamemode: Gamemode,
     pub is_hardcore: bool,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ManagementConfig {
     pub rcon: RconConfig,
     pub conf_reload_method: ConfigReloadMethod
 }
 
-#[derive(Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Debug, Deserialize, Serialize, PartialEq, Eq, Clone)]
 pub enum ConfigReloadMethod {
     RconSync,
     RestartServer,
     NoReload
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct RconConfig {
     #[serde(default)]
     pub port: u16,
@@ -94,7 +94,7 @@ pub struct RconConfig {
     pub enable: bool
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub enum Difficulty {
     Peaceful,
     Easy,
@@ -113,7 +113,7 @@ impl ToString for Difficulty {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub enum Gamemode {
     Survival,
     Creative,
@@ -132,7 +132,7 @@ impl ToString for Gamemode {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Config {
     pub server: ServerConfig,
     pub management: ManagementConfig,

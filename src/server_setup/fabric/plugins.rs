@@ -1,7 +1,6 @@
 use std::fs;
 
 use log::{debug, error, info};
-
 use crate::{config::{Config, Version, plugins::ModrinthVersion}, server_setup::download_file};
 
 // pub fn version_spec_matches(spec: &Version, possible_versions: &ModrinthVersion) -> bool {
@@ -40,7 +39,7 @@ pub fn version_spec_matches(spec: &Version, version: &ModrinthVersion) -> bool {
     };
 }
 
-pub async fn apply_mod_updates(c: &Config) {
+pub async fn apply_mod_updates_singlethread(c: &Config) {
     info!("checking for mod updates...");
     let mut updates_found = Vec::new();
     let desired_loader = "fabric".to_string();
@@ -88,5 +87,69 @@ pub async fn apply_mod_updates(c: &Config) {
 
         let fpath: String = format!("mods/{}", f.filename);
         download_file(&fpath, &f.url).await;
-    }   
+    }
+}
+
+
+pub async fn apply_mod_updates_mt(c: Config) {
+    info!("checking for mod updates...");
+    let desired_loader = "fabric".to_string();
+    let mc_ver = &c.server.version;
+
+    // Ensure the mods directory exists
+    let _ = fs::create_dir_all("mods")
+        .expect("the mods folder didnt make craeted akjsh");
+
+    let mut tasks = Vec::new();
+
+    for plugdef in &c.plugins.mods {
+        let plugdef = plugdef.clone();
+        let mc_ver = mc_ver.clone();
+        let desired_loader = desired_loader.clone();
+
+        // Spawn a task per mod
+        let handle = tokio::spawn(async move {
+            let possible_err_or_maybe_what_we_want = plugdef.source.versions().await; 
+            if let Ok(versions) = &possible_err_or_maybe_what_we_want {
+                for version in versions {
+                    debug!("checking {:?}", version);
+
+                    if !version.loaders.contains(&desired_loader) {
+                        continue;
+                    }
+
+                    if !version.game_versions.contains(&mc_ver) {
+                        continue;
+                    }
+
+                    if !version_spec_matches(&plugdef.version, &version) {
+                        continue;
+                    }
+
+                    info!("found compatible version ({}) of {:?}", version.version_number, plugdef.source);
+
+                    // Start the download immediately
+                    if let Some(f) = version.files.get(0) {
+                        let fpath = format!("mods/{}", f.filename);
+                        info!("downloading {}...", f.url);
+                        download_file(&fpath, &f.url).await;
+                    }
+
+                    return;  // Stop after first compatible version
+                }
+            }
+
+            error!(
+                "mod {:?} at version {:?} is incompatible with Minecraft '{}': {:?}",
+                plugdef.source, plugdef.version, mc_ver, &possible_err_or_maybe_what_we_want
+            );
+        });
+
+        tasks.push(handle);
+    }
+
+    // Wait for all tasks to finish
+    let _ = futures::future::join_all(tasks).await;
+
+    info!("all mods are processed!");
 }

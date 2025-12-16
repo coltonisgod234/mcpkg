@@ -4,26 +4,27 @@ server:
     installer_version: "1.1.0"
 
   name: "mc.qwatys.space"
-  port: 25565
-  max_memory: 2G
+  port: 25727
+  max_memory: 1G  # change later to something like 4G
   motd: ""
 
   version: "1.21.10"
   restart_every:
-    secs: 200  # test value.
+    secs: 21600  # 6 horus
     nanos: 0
 
-  update_mode: !AllCompatible
+  update_mode: !AllCompatible  # doesn't matter
 
   props:
     difficulty: !Medium
     gamemode: !Survival
     is_hardcore: false
 
-management:  
+management:
   rcon:
     enable: true
-    port: 25575
+    port: 25574
+    pass: "coltonisfemboy"  # oscar set a better password
 
   conf_reload_method: !RconSync
 
@@ -39,4 +40,63 @@ vcs:
 plugins:
   mods:
     - source: !Modrinth "simple-voice-chat"
-      version: !Any
+    - source: !Modrinth "geyser"
+    - source: !Modrinth "floodgate"
+    - source: !Modrinth "lithium"
+    - source: !Modrinth "mineral-chance"
+    - source: !Modrinth "minimotd"
+    - source: !Modrinth "adventure-platform-mod"
+    - source: !Modrinth "always-a-wither-skull"
+    - source: !Modrinth "appleskin"
+    - source: !Modrinth "elytra-armor"
+    - source: !Modrinth "axes-are-weapons"
+    - source: !Modrinth "Axiom"
+    - source: !Modrinth "balm"
+    - source: !Modrinth "cloth-config"
+    - source: !Modrinth "collective"
+    - source: !Modrinth "double-doors"
+    - source: !Modrinth "elytra-trims"
+    - source: !Modrinth "en-garde"
+    - source: !Modrinth "fabric-api"
+  # - source: !Modrinth "fabric-join-leave"
+    - source: !Modrinth "fabric-language-kotlin"
+    - source: !Modrinth "fallingtree"
+    - source: !Modrinth "forgiving-void"
+  # - source: !Modrinth "forgotten-farlands"
+    - source: !Modrinth "giant-spawn"
+    - source: !Modrinth "invview"
+    - source: !Modrinth "journeymap"
+    - source: !Modrinth "just-player-heads"
+    - source: !Modrinth "libjf"
+    - source: !Modrinth "midnightlib"
+    - source: !Modrinth "miniteleport"
+    - source: !Modrinth "mmv-moogs-missing-villages"
+    - source: !Modrinth "mns-moogs-nether-structures"
+    - source: !Modrinth "mss-moogs-soaring-structures"
+    - source: !Modrinth "moogs-structure-lib"
+    - source: !Modrinth "mtr-moogs-temples-reimagined"
+    - source: !Modrinth "moogs-voyager-structures"
+    - source: !Modrinth "moogs-structure-lib"
+    - source: !Modrinth "nullscape"
+    - source: !Modrinth "otterlib"
+    - source: !Modrinth "polymer"
+    - source: !Modrinth "quick-right-click"
+    - source: !Modrinth "simple-voice-chat-radio"
+    - source: !Modrinth "respawning-shulkers"
+    - source: !Modrinth "silk"
+    - source: !Modrinth "sit!"
+    - source: !Modrinth "snowballs-freeze-mobs"
+    - source: !Modrinth "sodium"
+    - source: !Modrinth "starter-kit"
+    - source: !Modrinth "structures-mod"
+    - source: !Modrinth "terralith"
+    - source: !Modrinth "vanish"
+  # - source: !Modrinth "vc-interaction"
+    - source: !Modrinth "veinminer"
+    - source: !Modrinth "versionchanger"
+  # - source: !Modrinth "viafabric"
+  # - source: !Modrinth "viafabricplus"
+  # - source: !Modrinth "viaversion"
+    - source: !Modrinth "villages-spawn-point"
+    - source: !Modrinth "woodworking"
+

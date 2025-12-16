@@ -1,12 +1,12 @@
 pub mod plugins;
 
-use std::{fs::{self, OpenOptions, remove_dir_all, remove_file}, io::{self, Write}};
+use std::{fmt::Display, fs::{self, OpenOptions, remove_dir_all, remove_file}, io::{self, Write}};
 use log::{info, warn};
 use crate::{config::{Config, ConfigReloadMethod}, server_setup::download_file};
 
 const SERVER_JAR_NAME: &str = "server.jar";
 
-pub async fn download_fabric_server_at(minecraft_version: &str, fabric_version: &str, installer_version: &str) {
+pub async fn download_fabric_server_at<T: Display>(minecraft_version: T, fabric_version: T, installer_version: T) {
     info!("downloading fabric server (minecraft {}, fabric {}, installer {})", minecraft_version, fabric_version, installer_version);
 
     // probably vulnerable..

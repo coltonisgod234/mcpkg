@@ -43,7 +43,7 @@ enum Command {
     }
 }
 
-#[tokio::main]
+#[tokio::main(flavor = "multi_thread", worker_threads = 16)]
 async fn main() {
     env_logger::init();
 
@@ -52,7 +52,7 @@ async fn main() {
 
     match args.command {
         Command::Sync => {
-            server_setup::sync(&cfg).await;
+            server_setup::sync_multithread(&cfg).await;
             info!("synchronization succeeded.");
         },
         Command::RunOnce => {
