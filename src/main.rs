@@ -1,7 +1,9 @@
+use std::io::stdin;
+
 use clap::{Parser, Subcommand};
 use log::{error, info};
 
-use crate::{config::ServerKind, vcs::CommitInfo};
+use crate::{config::ServerKind, server_reload::rcon_connect, vcs::{CommitInfo, structures::Change}};
 
 pub mod config;
 pub mod server_setup;
@@ -23,6 +25,7 @@ enum Command {
     RunForever,
     Teardown,
     Stop,
+    Repl,
 
     // VCS
     Init,
@@ -40,7 +43,8 @@ enum Command {
 
         #[arg(long = "allow-null-commit")]
         allow_null_commit: bool
-    }
+    },
+    GetUnreplicatedChanges,
 }
 
 #[tokio::main(flavor = "multi_thread", worker_threads = 16)]
@@ -78,15 +82,11 @@ async fn main() {
             }
         },
         Command::Init => {
-            unimplemented!();
-
-            /* vcs::init_vcs()
-                .expect("failed to initialize VCS"); */
+            vcs::init_vcs()
+                .expect("failed to initialize VCS");
         },
         Command::Commit { message, world, config, allow_null_commit } => {
-            unimplemented!();
-
-            /* // make sure the user doesn't do anything dumb!
+            // make sure the user doesn't do anything dumb!
             if !world && !config && !allow_null_commit {
                 error!("You are about to make a null commit. This commit will have no tracked files and does nothing but clutter up the repository");
                 error!("However, null commits can be used to resolve very specific repository errors. If you actually want to make a null commit, specify --allow-null-commit");
@@ -100,7 +100,36 @@ async fn main() {
             repo.commit_nonatomic(desired);
             repo.save_to(vcs::MCPKG_REPO_CONFIG);
 
-            // info!("{:?}", diff); */
+            // info!("{:?}", diff);
+        },
+        Command::GetUnreplicatedChanges => {
+            let repo = vcs::repo();
+            let changes = repo.uncommited_changes();
+            for change in changes {
+                match change {
+                    Change::Create(f) => println!("create\t{:?}", f),
+                    Change::Modify(f) => println!("modify\t{:?}", f),
+                    Change::Remove(f) => println!("remove\t{:?}", f),
+                }
+            }
+        },
+        Command::Repl => {
+            let mut conn = rcon_connect(&cfg).await
+                .expect("failed to connect to rcon");
+
+            let mut stdin = stdin();
+
+            loop {
+                let mut b = String::new();
+                print!(">>> ");
+                stdin.read_line(&mut b)
+                    .expect("failed to read line");
+
+                let reply = conn.cmd(&b).await
+                    .expect("failed to send cmd");
+
+                println!("<<< {}", reply);
+            }
         }
     }
 }

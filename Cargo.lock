@@ -1003,7 +1003,7 @@ dependencies = [
 
 [[package]]
 name = "mcpkg"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "blake3",
  "clap",

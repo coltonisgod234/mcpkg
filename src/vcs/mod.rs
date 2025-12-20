@@ -113,6 +113,10 @@ impl Repository {
         }
     }
 
+    pub fn uncommited_changes(&self) -> Vec<Change> {
+        return self.get_uncommited_changes(self.get_ignores())
+    }
+
     pub fn save_to<P>(&self, path: P)
     where
         P: AsRef<Path>

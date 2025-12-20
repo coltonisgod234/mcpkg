@@ -61,6 +61,7 @@ pub struct ServerConfig {
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct WorldConfig {
     pub path: String,
+    pub seed: String,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]

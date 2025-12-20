@@ -3,7 +3,7 @@ use rcon::{AsyncStdStream};
 
 use crate::config::{Config, ConfigReloadMethod};
 
-async fn rcon_connect(c: &Config) -> rcon::Result<rcon::Connection<AsyncStdStream>> {
+pub async fn rcon_connect(c: &Config) -> rcon::Result<rcon::Connection<AsyncStdStream>> {
     let rcon_ip = format!("127.0.0.1:{}", c.management.rcon.port);
 
     let rconn = <rcon::Connection<AsyncStdStream>>::builder()

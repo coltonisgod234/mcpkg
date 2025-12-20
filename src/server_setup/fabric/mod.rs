@@ -45,6 +45,8 @@ pub fn gen_server_props(c: &Config) -> io::Result<()> {
 
     writeln!(file, "level-name={}", c.world.path)?;
 
+    writeln!(file, "seed={}", c.world.seed)?;
+
     return Ok(())
 }
 
@@ -63,7 +65,7 @@ pub async fn setup_server(c: &Config) -> io::Result<()> {
 pub async fn teardown() {
     const REMOVE_DIRS: [&str; 4] = ["libraries", ".fabric", "mods", "versions"];
     //const REMOVE_FILE: [&str; 8] = ["banned-ips.json", "banned-players.json", "eula.txt", "ops.json", SERVER_JAR_NAME, "server.properties", "usercache.json", "whitelist.json"];
-    const REMOVE_FILE: [&str; 5] = ["eula.txt", "ops.json", SERVER_JAR_NAME, "server.properties", "usercache.json"];
+    const REMOVE_FILE: [&str; 3] = ["eula.txt", SERVER_JAR_NAME, "server.properties"];
 
     for dir in REMOVE_DIRS {
         if let Err(e) = remove_dir_all(dir) {
