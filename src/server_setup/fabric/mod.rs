@@ -44,8 +44,7 @@ pub fn gen_server_props(c: &Config) -> io::Result<()> {
     writeln!(file, "rcon.password={}", c.management.rcon.pass)?;
 
     writeln!(file, "level-name={}", c.world.path)?;
-
-    writeln!(file, "seed={}", c.world.seed)?;
+    writeln!(file, "level-seed={}", c.world.seed)?;
 
     return Ok(())
 }
