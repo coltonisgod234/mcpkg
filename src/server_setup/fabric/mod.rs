@@ -39,7 +39,7 @@ pub fn gen_server_props(c: &Config) -> io::Result<()> {
         panic!("in order to use the `RconSync` reload method, you need to enable rcon.")
     }
 
-    writeln!(file, "enabled-rcon={}", c.management.rcon.enable)?;
+    writeln!(file, "enable-rcon={}", c.management.rcon.enable)?;
     writeln!(file, "rcon.port={}", c.management.rcon.port)?;
     writeln!(file, "rcon.password={}", c.management.rcon.pass)?;
 
