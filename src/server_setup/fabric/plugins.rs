@@ -3,24 +3,6 @@ use std::fs;
 use log::{debug, error, info};
 use crate::{config::{Config, Version, plugins::ModrinthVersion}, server_setup::download_file};
 
-// pub fn version_spec_matches(spec: &Version, possible_versions: &ModrinthVersion) -> bool {
-//     return match spec {
-//         Version::Exact(v) => possible_versions.contains(v),
-//         Version::AnyOf(v) => possible_versions.iter().any(|x| v.contains(x)),  // slow
-//         Version::NoneOf(v) => !possible_versions.iter().any(|x| v.contains(x)),
-//         Version::FilterList(filters) => {
-//             for filter in filters {
-//                 if !version_spec_matches(filter, possible_versions) {
-//                     return false
-//                 }
-//             }
-
-//             return true
-//         },
-//         Version::Any => true
-//     }
-// }
-
 pub fn version_spec_matches(spec: &Version, version: &ModrinthVersion) -> bool {
     return match spec {
         Version::Any => true,

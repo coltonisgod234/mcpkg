@@ -2,9 +2,7 @@ pub mod plugins;
 
 use std::{fmt::Display, fs::{self, OpenOptions, remove_dir_all, remove_file}, io::{self, Write}};
 use log::{info, warn};
-use crate::{config::{Config, ConfigReloadMethod}, server_setup::download_file};
-
-const SERVER_JAR_NAME: &str = "server.jar";
+use crate::{config::{Config, ConfigReloadMethod}, server_setup::{download_file, SERVER_JAR_NAME}};
 
 pub async fn download_fabric_server_at<T: Display>(minecraft_version: T, fabric_version: T, installer_version: T) {
     info!("downloading fabric server (minecraft {}, fabric {}, installer {})", minecraft_version, fabric_version, installer_version);

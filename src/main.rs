@@ -1,4 +1,4 @@
-use std::io::stdin;
+use std::io::{Write, stdin, stdout};
 
 use clap::{Parser, Subcommand};
 use log::{error, info};
@@ -117,15 +117,19 @@ async fn main() {
             let mut conn = rcon_connect(&cfg).await
                 .expect("failed to connect to rcon");
 
-            let mut stdin = stdin();
+            let stdin = stdin();
+            let mut stdout = stdout();
 
             loop {
                 let mut b = String::new();
                 print!(">>> ");
+                stdout.flush()
+                    .expect("flush failed");
+
                 stdin.read_line(&mut b)
                     .expect("failed to read line");
 
-                let reply = conn.cmd(&b).await
+                let reply = conn.cmd(b.trim()).await
                     .expect("failed to send cmd");
 
                 println!("<<< {}", reply);

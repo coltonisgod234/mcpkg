@@ -1,3 +1,5 @@
+# mcpkg version 0.0.6 configuration file
+
 server:
   kind: !Fabric
     fabric_version: "0.18.2"
@@ -5,7 +7,7 @@ server:
 
   name: "mc.qwatys.space"
   port: 25727
-  max_memory: 1G  # change later to something like 4G
+  max_memory: 6G  # change later to something like 4G
   motd: ""
 
   version: "1.21.10"
@@ -30,6 +32,7 @@ management:
 
 world:
   path: "world"
+  seed: "67676767"
 
 vcs:
   ignore:

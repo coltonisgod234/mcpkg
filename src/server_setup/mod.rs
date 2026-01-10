@@ -1,4 +1,7 @@
 pub mod fabric;
+pub mod paper;
+
+const SERVER_JAR_NAME: &str = "server.jar";
 
 use std::{fs::File, io::copy};
 use crate::config::{Config, ServerKind};

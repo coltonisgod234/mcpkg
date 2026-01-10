@@ -1003,7 +1003,7 @@ dependencies = [
 
 [[package]]
 name = "mcpkg"
-version = "0.0.5"
+version = "0.0.7"
 dependencies = [
  "blake3",
  "clap",
@@ -1015,6 +1015,7 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_yaml",
+ "srtparse",
  "tokio",
  "uuid",
  "walkdir",
@@ -1578,6 +1579,12 @@ dependencies = [
  "libc",
  "windows-sys 0.60.2",
 ]
+
+[[package]]
+name = "srtparse"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "47df29f8d00075baa5eb3174fa870b43d7eacc7e95c22796f8c362f64e01f47c"
 
 [[package]]
 name = "stable_deref_trait"
